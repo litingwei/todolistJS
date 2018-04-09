@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	ul li.checked{
+		background: #888;
+		color:#fff;
+		text-decoration:line-through;
+	}
+	</style>
+</head>
+<body>
+		<h2>My To Do List</h2>
+		<!-- input增加enter事件 -->
+		<input type="text" placeholder="Title..." id="myInput" onkeydown="if(event.keyCode==13){newElement()}">
+		<button onclick="newElement()">Add</button>
+		<ul id="myUL">
+			<li>Hit the gym</li>
+			<li>Pay bills</li>
+			<li>Meet George</li>
+			<li>Buy eggs</li> 
+			<li>Read a boo</li>
+			<li>Organize office</li>
+		</ul>
+	<script type="text/javascript">
+	var myNodelist=document.getElementsByTagName("li");
+	for(var i=0;i<myNodelist.length;i++){
+		var span=document.createElement("span");
+		var txt=document.createTextNode("\u00D7");
+		span.className="close";
+		span.appendChild(txt);
+		myNodelist[i].appendChild(span);
+	}/*增加×号*/
+	var close=document.getElementsByClassName("close");
+	for(var i=0;i<close.length;i++){
+		close[i].onclick=function(){
+			var a=this.parentElement;
+			a.style.display="none";
+		}
+	}/*点击×时删除其父元素li*/
+	var list=document.querySelector('ul');
+	list.addEventListener('click',function(ev){
+		console.log("ev:",ev);
+		console.log("ev.target:",ev.target);
+		console.log("ev.target.tagName:",ev.target.tagName);
+		if(ev.target.tagName==="LI"){
+			ev.target.classList.toggle('checked');
+		}
+	},false)/*点击li元素时添加或删除类*/
+	function newElement(){
+		var li=document.createElement("li");
+		var inputValue=document.getElementById("myInput").value;
+		var a=document.createTextNode(inputValue);
+		li.appendChild(a);
+		if(inputValue===""){
+			alert("You must write something!");
+		}else {
+			document.getElementById("myUL").appendChild(li);
+		}
+		document.getElementById("myInput").value="";
+		var span=document.createElement("span");
+		var txt=document.createTextNode("\u00D7");
+		span.className="close";
+		span.appendChild(txt);
+		li.appendChild(span);/*增加×号*/
+		span.onclick=function(){
+			var a=this.parentElement;
+			a.style.display="none";
+		}/*点击×时删除其父元素li*/
+	}
+	</script>
+</body>
+</html>
